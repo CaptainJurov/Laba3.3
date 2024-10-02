@@ -11,31 +11,16 @@ class Итератор {
 private:
     std::ifstream reader;
     bool eof;
-    Bank current_bank;
+    std::stringstream current_ss;
     void next() {
-        std::stringstream now;
         std::string s;
+        current_ss.clear();
+        current_ss.str("");
         eof = !std::getline(reader, s);
-        if (!eof) {
-            now << s;
-            std::string name;
-            now>>name;
-            std::vector<Ссуда> Ссуды;
-            int year, ssuda;
-            while (now>>year>>ssuda) {
-                Ссуда ssudaa(year, ssuda);
-                // std::cout<<year<<" "<<ssuda<<std::endl;
-                Ссуды.push_back(ssudaa);
-            }
-            current_bank = Bank(name, Ссуды);
-            std::cout<<"[Filereader]>"<<current_bank.GetName()<<std::endl;
-            for (auto a = current_bank.GetSsuds().begin(); a!=current_bank.GetSsuds().end();++a) {
-                std::cout<<"[Filereader]>"<<(*a).Год<<" "<<(*a).Ссуда_<<std::endl;
-            }
-        }
+        current_ss << s;
     }
 public:
-    Итератор(std::string fs = ""): current_bank(Bank("GOAL")) {
+    Итератор(std::string fs = "") {
         reader = std::ifstream(fs);
         next();
     }
@@ -48,19 +33,34 @@ public:
     bool operator!=(Итератор& right) {
         return !(*this==right);
     }
-    Bank operator*() {
-        return current_bank;
+    std::stringstream& operator*() {
+        return current_ss;
     }
     Итератор& operator++() {
         next();
         return *this;
     }
 };
-
+Bank Parse(std::stringstream& now) {
+    std::string name;
+    now>>name;
+    std::vector<Ссуда> Ссуды;
+    int year, ssuda;
+    while (now>>year>>ssuda) {
+        Ссуда ssudaa(year, ssuda);
+        Ссуды.push_back(ssudaa);
+    }
+    Bank current_bank(name, Ссуды);
+    std::cout<<"[SSParse]>"<<current_bank.GetName()<<std::endl;
+    for (auto a = current_bank.GetSsuds().begin(); a!=current_bank.GetSsuds().end();++a) {
+        std::cout<<"[SSParse]>"<<(*a).Год<<" "<<(*a).Ссуда_<<std::endl;
+    }
+    return current_bank;
+}
 int main() {
     std::vector<Bank> Банки = {};
     for (Итератор старт("first.txt"), конец; старт != конец; ++старт) {
-        Банки.push_back(Bank(*старт));
+        Банки.push_back(Bank(Parse(*старт)));
     }
     for (auto st = Банки.begin();st!=Банки.end();++st ) {
         std::cout<<(*st).GetName()<<std::endl;

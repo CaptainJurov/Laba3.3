@@ -25,7 +25,6 @@ public:
         Название = other.Название;
         Ссуды = other.Ссуды;
     }
-
     void AppendSSud(Ссуда ssud) {
         Ссуды.push_back(ssud);
     }
