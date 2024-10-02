@@ -68,7 +68,5 @@ int main() {
             std::cout<<"Год: "<<(*elem).Год<<" | Ссуда: "<<(*elem).Ссуда_<<std::endl;
         }
     }
-
-
     return 0;
 }
