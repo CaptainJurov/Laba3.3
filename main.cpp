@@ -4,6 +4,7 @@
 #include <fstream>
 #include <sstream>
 #include <regex>
+#include <iterator>
 #include "bank.h"
 
 class Итератор {
@@ -23,9 +24,14 @@ private:
             int year, ssuda;
             while (now>>year>>ssuda) {
                 Ссуда ssudaa(year, ssuda);
+                // std::cout<<year<<" "<<ssuda<<std::endl;
                 Ссуды.push_back(ssudaa);
             }
             current_bank = Bank(name, Ссуды);
+            std::cout<<"[Filereader]>"<<current_bank.GetName()<<std::endl;
+            for (auto a = current_bank.GetSsuds().begin(); a!=current_bank.GetSsuds().end();++a) {
+                std::cout<<"[Filereader]>"<<(*a).Год<<" "<<(*a).Ссуда_<<std::endl;
+            }
         }
     }
 public:
@@ -52,10 +58,17 @@ public:
 };
 
 int main() {
-    std::vector<Bank> Банки;
+    std::vector<Bank> Банки = {};
     for (Итератор старт("first.txt"), конец; старт != конец; ++старт) {
-        std::cout << (*старт).GetName() << std::endl;
-        Банки.push_back(*старт);
+        Банки.push_back(Bank(*старт));
     }
+    for (auto st = Банки.begin();st!=Банки.end();++st ) {
+        std::cout<<(*st).GetName()<<std::endl;
+        for (auto elem = (*st).GetSsuds().begin(); elem!=(*st).GetSsuds().end(); ++elem) {
+            std::cout<<"Год: "<<(*elem).Год<<" | Ссуда: "<<(*elem).Ссуда_<<std::endl;
+        }
+    }
+
+
     return 0;
 }
