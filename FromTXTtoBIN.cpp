@@ -6,6 +6,7 @@
 #include <regex>
 #include <iterator>
 #include "bank.h"
+#include <stdio.h>
 
 class Итератор {
 private:
@@ -68,5 +69,23 @@ int main() {
             std::cout<<"Год: "<<(*elem).Год<<" | Ссуда: "<<(*elem).Ссуда_<<std::endl;
         }
     }
+    
+    std::ofstream gog("binf.goal", std::ios::binary);
+    for (auto& bank : Банки) {
+        size_t name_length = bank.GetName().size();
+        gog.write(reinterpret_cast<const char*>(&name_length), sizeof(name_length));
+        gog.write(bank.GetName().c_str(), name_length);
+        
+        size_t ssud_count = bank.GetSsuds().size();
+        gog.write(reinterpret_cast<const char*>(&ssud_count), sizeof(ssud_count));
+        
+        for (const auto& ssud : bank.GetSsuds()) {
+            gog.write(reinterpret_cast<const char*>(&ssud.Год), sizeof(ssud.Год));
+            gog.write(reinterpret_cast<const char*>(&ssud.Ссуда_), sizeof(ssud.Ссуда_));
+        }
+}
+gog.close();
+
+    
     return 0;
 }

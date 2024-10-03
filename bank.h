@@ -18,6 +18,7 @@ public:
         Название = name;
         Ссуды = Ssuds;
     }
+    Bank(): Название(""), Ссуды() {}
     Bank(std::string name) {
         this->Название = name;
     }
