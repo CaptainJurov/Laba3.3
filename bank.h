@@ -72,9 +72,6 @@ public:
         {
             out.write((char*)&Ссуды[i],sizeof(Ссуда));
         }
-
-        // out.write((char*)&sz,sizeof(sz));
-        // out.write((char*)&Ссуды[0],sizeof(int)*sz);
         return out;
     }
 
@@ -83,5 +80,41 @@ public:
     }
     std::string GetName() {
         return Название;
+    }
+};
+
+//---------------------------------------------------------------
+
+// ASS - Associated Serialized Structure
+// + Банк =
+// 1 Man 1 Cup
+
+struct ASS {
+    std::vector<Bank> Банки;
+    
+    ASS()=default;
+
+    void load(std::string fs) {
+        std::ifstream fin(fs, std::ios::binary);
+        size_t len;
+        fin.read((char*)&len, sizeof(len));
+        for (int i = 0; i<len; ++i) {
+            Bank tmp;
+            tmp.read(fin);
+            Банки.push_back(tmp);
+        }
+        fin.close();
+    }
+
+    void save(std::string fs) {
+        
+        std::ofstream gog(fs, std::ios::binary);
+        size_t len = Банки.size();
+        gog.write((char*)&len, sizeof(len));
+
+        for (auto& bank : Банки) {
+            bank.write(gog);
+        }
+        gog.close();
     }
 };
