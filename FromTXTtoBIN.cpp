@@ -71,21 +71,12 @@ int main() {
     }
     
     std::ofstream gog("binf.goal", std::ios::binary);
+    size_t len = Банки.size();
+    gog.write((char*)&len, sizeof(len));
     for (auto& bank : Банки) {
-        size_t name_length = bank.GetName().size();
-        gog.write(reinterpret_cast<const char*>(&name_length), sizeof(name_length));
-        gog.write(bank.GetName().c_str(), name_length);
         
-        size_t ssud_count = bank.GetSsuds().size();
-        gog.write(reinterpret_cast<const char*>(&ssud_count), sizeof(ssud_count));
-        
-        for (const auto& ssud : bank.GetSsuds()) {
-            gog.write(reinterpret_cast<const char*>(&ssud.Год), sizeof(ssud.Год));
-            gog.write(reinterpret_cast<const char*>(&ssud.Ссуда_), sizeof(ssud.Ссуда_));
-        }
-}
+        bank.write(gog);
+    }
 gog.close();
-
-    
     return 0;
 }
