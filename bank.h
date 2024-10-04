@@ -92,7 +92,9 @@ public:
 struct ASS {
     std::vector<Bank> Банки;
     
-    ASS()=default;
+    ASS() {
+        Банки = {};
+    };
 
     void load(std::string fs) {
         std::ifstream fin(fs, std::ios::binary);

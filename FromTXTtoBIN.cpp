@@ -59,24 +59,19 @@ Bank Parse(std::stringstream& now) {
     return current_bank;
 }
 int main() {
-    std::vector<Bank> Банки = {};
+    ASS *Obj = new ASS();
+    //std::vector<Bank> Банки = {};
+    auto *Банки = &(Obj->Банки);
     for (Итератор старт("first.txt"), конец; старт != конец; ++старт) {
-        Банки.push_back(Bank(Parse(*старт)));
+        Банки->push_back(Bank(Parse(*старт)));
     }
-    for (auto st = Банки.begin();st!=Банки.end();++st ) {
+    for (auto st = Банки->begin();st!=Банки->end();++st ) {
         std::cout<<(*st).GetName()<<std::endl;
         for (auto elem = (*st).GetSsuds().begin(); elem!=(*st).GetSsuds().end(); ++elem) {
             std::cout<<"Год: "<<(*elem).Год<<" | Ссуда: "<<(*elem).Ссуда_<<std::endl;
         }
     }
     
-    std::ofstream gog("binf.goal", std::ios::binary);
-    size_t len = Банки.size();
-    gog.write((char*)&len, sizeof(len));
-    for (auto& bank : Банки) {
-        
-        bank.write(gog);
-    }
-gog.close();
+    Obj->save("goal.biba");
     return 0;
 }
