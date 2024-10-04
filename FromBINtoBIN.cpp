@@ -17,17 +17,16 @@ int main() {
     }
 
     std::cout<<"\n=--=-=--=\nЛиквидируем банки с общей ссудой меньше 100 тыс.\n=--=-=--=\n"<<std::endl;
-    std::cout<<восстановленные_банки->size()<<std::endl;
     for (auto bank = восстановленные_банки->begin(); bank!=восстановленные_банки->end(); ) {
         int Суммарная_Ссуда = 0;
         for (auto& Ssuda : (*bank).GetSsuds()) {
             Суммарная_Ссуда += Ssuda.Ссуда_;
         }
-        std::cout<<Суммарная_Ссуда<<"\n";
         if (Суммарная_Ссуда<100) {
+            auto cope = bank;
+            ++cope;
             восстановленные_банки->erase(bank);
-            std::cout<<восстановленные_банки->size()<<std::endl;
-            
+            bank = cope;
         }
         else {++bank;}
     }
@@ -39,6 +38,4 @@ int main() {
         }
     }
 
-
-    std::cout<<"end\n";
 }
