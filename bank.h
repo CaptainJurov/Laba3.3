@@ -1,7 +1,7 @@
 #pragma once
 #include <vector>
 #include <string>
-
+#include <list>
 
 
 struct Ссуда {
@@ -90,10 +90,10 @@ public:
 // 1 Man 1 Cup
 
 struct ASS {
-    std::vector<Bank> Банки;
+    std::list<Bank> Банки;
     
     ASS() {
-        Банки = {};
+        Банки = std::list<Bank>{};
     };
 
     void load(std::string fs) {

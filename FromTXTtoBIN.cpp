@@ -3,10 +3,10 @@
 #include <vector>
 #include <fstream>
 #include <sstream>
-#include <regex>
 #include <iterator>
 #include "bank.h"
 #include <stdio.h>
+#include <list>
 
 class Итератор {
 private:
@@ -58,9 +58,10 @@ Bank Parse(std::stringstream& now) {
     }
     return current_bank;
 }
+
+
 int main() {
     ASS *Obj = new ASS();
-    //std::vector<Bank> Банки = {};
     auto *Банки = &(Obj->Банки);
     for (Итератор старт("first.txt"), конец; старт != конец; ++старт) {
         Банки->push_back(Bank(Parse(*старт)));
@@ -71,7 +72,6 @@ int main() {
             std::cout<<"Год: "<<(*elem).Год<<" | Ссуда: "<<(*elem).Ссуда_<<std::endl;
         }
     }
-    
     Obj->save("goal.biba");
     return 0;
 }
