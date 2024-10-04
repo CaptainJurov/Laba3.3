@@ -38,4 +38,5 @@ int main() {
         }
     }
 
+    Obj->save("second.gotovo");
 }
