@@ -36,6 +36,13 @@ public:
     void AppendSSud(Ссуда ssud) {
         Ссуды.push_back(ssud);
     }
+    int GetSumSSud() {
+        int Суммарная_Ссуда = 0;
+        for (auto& Ssuda : GetSsuds()) {
+            Суммарная_Ссуда += Ssuda.Ссуда_;
+        }
+        return Суммарная_Ссуда;
+    }
     std::ifstream& read(std::ifstream& in)
     {
         size_t len;                         

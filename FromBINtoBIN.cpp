@@ -4,24 +4,21 @@
 #include <vector>
 int main() {
     ASS *Obj = new ASS();
-    Obj->load("second.gotovo");
+    Obj->load("goal.biba");
 
     auto *восстановленные_банки = &(Obj->Банки);
     
     for (auto& bank : *восстановленные_банки) {
-        std::cout<<bank.GetName()<<std::endl;
+        std::cout<<bank.GetName()<<"--------"<<std::endl;
         for (const auto& elem : bank.GetSsuds() ) {
             std::cout<<"Год: "<<elem.Год<<" | Ссуда: "<<elem.Ссуда_<<std::endl;
         }
+        std::cout<<std::endl;
     }
 
     std::cout<<"\n=--=-=--=\nЛиквидируем банки с общей ссудой меньше 100 тыс.\n=--=-=--=\n"<<std::endl;
     for (auto bank = восстановленные_банки->begin(); bank!=восстановленные_банки->end(); ) {
-        int Суммарная_Ссуда = 0;
-        for (auto& Ssuda : (*bank).GetSsuds()) {
-            Суммарная_Ссуда += Ssuda.Ссуда_;
-        }
-        if (Суммарная_Ссуда<100) {
+        if (bank->GetSumSSud()<100) {
             auto cope = bank;
             ++cope;
             восстановленные_банки->erase(bank);
@@ -29,12 +26,15 @@ int main() {
         }
         else {++bank;}
     }
+    
+    восстановленные_банки->sort([](Bank& a, Bank& b) { return a.GetSumSSud() > b.GetSumSSud();});
 
     for (auto& bank : *восстановленные_банки) {
-        std::cout<<bank.GetName()<<std::endl;
+        std::cout<<bank.GetName()<<"---------"<<std::endl;
         for (const auto& elem : bank.GetSsuds() ) {
             std::cout<<"Год: "<<elem.Год<<" | Ссуда: "<<elem.Ссуда_<<std::endl;
         }
+        std::cout<<std::endl;
     }
 
     Obj->save("third.gotovo");
