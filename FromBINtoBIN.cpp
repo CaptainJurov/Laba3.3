@@ -4,11 +4,10 @@
 #include <vector>
 int main() {
     ASS *Obj = new ASS();
-    Obj->load("goal.biba");
+    Obj->load("second.gotovo");
 
     auto *восстановленные_банки = &(Obj->Банки);
     
-    std::cout<<"end read\n";
     for (auto& bank : *восстановленные_банки) {
         std::cout<<bank.GetName()<<std::endl;
         for (const auto& elem : bank.GetSsuds() ) {
@@ -38,5 +37,5 @@ int main() {
         }
     }
 
-    Obj->save("second.gotovo");
+    Obj->save("third.gotovo");
 }
