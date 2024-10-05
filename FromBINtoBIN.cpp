@@ -29,8 +29,6 @@ int main() {
     
     ASS *Копия = new ASS();
     auto *копия = &(Копия->Банки);
-
-    восстановленные_банки->sort([](Bank& a, Bank& b) { return a.GetSumSSud() > b.GetSumSSud();});
     
     for (auto& bank : *восстановленные_банки) {
         std::cout<<bank.GetName()<<"---------"<<std::endl;
@@ -46,6 +44,8 @@ int main() {
     Obj->save("third.gotovo");
     std::cout<<"Главный обьект удален, вывожу копию:"<<std::endl;
     delete Obj;
+
+    копия->sort([](Bank& a, Bank& b) { return a.GetSumSSud() < b.GetSumSSud();});
 
     for (auto& bank : *копия) {
         std::cout<<bank.GetName()<<"---------"<<std::endl;
