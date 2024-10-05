@@ -67,10 +67,11 @@ int main() {
         Банки->push_back(Bank(Parse(*старт)));
     }
     for (auto st = Банки->begin();st!=Банки->end();++st ) {
-        std::cout<<(*st).GetName()<<std::endl;
+        std::cout<<(*st).GetName()<<"----------------"<<std::endl;
         for (auto elem = (*st).GetSsuds().begin(); elem!=(*st).GetSsuds().end(); ++elem) {
             std::cout<<"Год: "<<(*elem).Год<<" | Ссуда: "<<(*elem).Ссуда_<<std::endl;
         }
+        std::cout<<std::endl;
     }
     Obj->save("goal.biba");
     return 0;
