@@ -63,9 +63,11 @@ Bank Parse(std::stringstream& now) {
 int main() {
     ASS *Obj = new ASS();
     auto *Банки = &(Obj->Банки);
+    
     for (Итератор старт("first.txt"), конец; старт != конец; ++старт) {
         Банки->push_back(Bank(Parse(*старт)));
     }
+
     for (auto st = Банки->begin();st!=Банки->end();++st ) {
         std::cout<<(*st).GetName()<<"----------------"<<std::endl;
         for (auto elem = (*st).GetSsuds().begin(); elem!=(*st).GetSsuds().end(); ++elem) {
@@ -73,6 +75,8 @@ int main() {
         }
         std::cout<<std::endl;
     }
+    
     Obj->save("goal.biba");
+    
     return 0;
 }
