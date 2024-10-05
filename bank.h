@@ -2,7 +2,7 @@
 #include <vector>
 #include <string>
 #include <list>
-
+#include <fstream>
 
 struct Ссуда {
     int Год;
