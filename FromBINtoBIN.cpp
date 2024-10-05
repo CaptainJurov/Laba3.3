@@ -27,9 +27,27 @@ int main() {
         else {++bank;}
     }
     
-    восстановленные_банки->sort([](Bank& a, Bank& b) { return a.GetSumSSud() > b.GetSumSSud();});
+    ASS *Копия = new ASS();
+    auto *копия = &(Копия->Банки);
 
+    восстановленные_банки->sort([](Bank& a, Bank& b) { return a.GetSumSSud() > b.GetSumSSud();});
+    
     for (auto& bank : *восстановленные_банки) {
+        std::cout<<bank.GetName()<<"---------"<<std::endl;
+
+        копия->push_back(Bank(bank));
+        
+        for (const auto& elem : bank.GetSsuds() ) {
+            std::cout<<"Год: "<<elem.Год<<" | Ссуда: "<<elem.Ссуда_<<std::endl;
+        }
+        std::cout<<std::endl;
+    }
+    
+    Obj->save("third.gotovo");
+    std::cout<<"Главный обьект удален, вывожу копию:"<<std::endl;
+    delete Obj;
+
+    for (auto& bank : *копия) {
         std::cout<<bank.GetName()<<"---------"<<std::endl;
         for (const auto& elem : bank.GetSsuds() ) {
             std::cout<<"Год: "<<elem.Год<<" | Ссуда: "<<elem.Ссуда_<<std::endl;
@@ -37,5 +55,4 @@ int main() {
         std::cout<<std::endl;
     }
 
-    Obj->save("third.gotovo");
 }
