@@ -42,8 +42,9 @@ int main() {
     }
     
     Obj->save("third.gotovo");
-    std::cout<<"Главный обьект удален, вывожу копию:"<<std::endl;
     delete Obj;
+    std::cout<<"Главный обьект удален, вывожу копию:"<<std::endl;
+
 
     копия->sort([](Bank& a, Bank& b) { return a.GetSumSSud() < b.GetSumSSud();});
 
