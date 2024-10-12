@@ -90,13 +90,22 @@ public:
     std::string GetName() {
         return Название;
     }
+    std::ifstream& operator>>(std::ifstream& out) {
+    return read(out);
+    }
+    std::ofstream& operator<<(std::ofstream& in) {
+    return write(in);
+}
 };
-
+std::ifstream& operator>>(std::ifstream& out, Bank& right) {
+    return right.read(out);
+}
+std::ofstream& operator<<(std::ofstream& in, Bank& right) {
+    return right.write(in);
+}
 //---------------------------------------------------------------
 
 // ASS - Associated Serialized Structure
-// + Банк =
-// 1 Man 1 Cup
 
 struct ASS {
     std::list<Bank> Банки;
@@ -107,9 +116,8 @@ struct ASS {
 
     void load(std::string fs) {
         std::ifstream fin(fs, std::ios::binary);
-        size_t len;
-        fin.read((char*)&len, sizeof(len));
-        for (int i = 0; i<len; ++i) {
+
+        while (fin.peek()!=EOF) {
             Bank tmp;
             tmp.read(fin);
             Банки.push_back(tmp);
@@ -120,8 +128,6 @@ struct ASS {
     void save(std::string fs) {
         
         std::ofstream gog(fs, std::ios::binary);
-        size_t len = Банки.size();
-        gog.write((char*)&len, sizeof(len));
 
         for (auto& bank : Банки) {
             bank.write(gog);

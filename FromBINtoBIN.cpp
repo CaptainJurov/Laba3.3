@@ -4,8 +4,14 @@
 #include <vector>
 int main() {
     ASS *Obj = new ASS();
-    Obj->load("goal.biba");
-
+    //Obj->load("goal.biba");
+    std::ifstream z("goal.biba", std::ios::binary);
+    Bank tmp;
+    while (z.peek()!=EOF) {
+        z>>tmp;
+        Obj->Банки.push_back(Bank(tmp));
+    }
+    z.close();
     auto *восстановленные_банки = &(Obj->Банки);
     
     for (auto& bank : *восстановленные_банки) {
@@ -40,8 +46,12 @@ int main() {
         }
         std::cout<<std::endl;
     }
-    
-    Obj->save("third.gotovo");
+
+    std::ofstream v("third.gotovo", std::ios::binary);
+    for (auto& bank : *восстановленные_банки) {
+        v<<bank;
+    }
+    v.close();
     delete Obj;
     std::cout<<"Главный обьект удален, вывожу копию:"<<std::endl;
 
